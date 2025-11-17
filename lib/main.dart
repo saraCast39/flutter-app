@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
-import 'movie_service.dart'; 
+import 'movie_service.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();   
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  print("Firebase integrado");
+
   runApp(const MyApp());
 }
 
@@ -55,12 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          
           Image.network(
             'https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2021/01/masterclass-cover2.jpg',
             fit: BoxFit.cover,
           ),
-          
+
           SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -85,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                
+
                 isLoading
                     ? const CircularProgressIndicator()
                     : movies.isEmpty
